@@ -1,0 +1,17 @@
+#add for board init.rc for recovery mode
+import /init.recovery.common.rc
+
+on init
+    write /sys/class/power_supply/usb/otg_switch 1 
+    start load_flashlight_modules
+    
+on boot
+    start boot-hal-1-1
+    start health-hal-2-1
+
+service load_flashlight_modules /system/bin/load_flashlight_modules.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
