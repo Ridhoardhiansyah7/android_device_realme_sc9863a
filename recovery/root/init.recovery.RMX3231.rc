@@ -2,10 +2,9 @@
 import /init.recovery.common.rc
 
 on init
-    write /sys/class/power_supply/usb/otg_switch 1
+    write /sys/fs/selinux/enforce 0 #force permissive
+    write /sys/class/power_supply/usb/otg_switch 1 #enable otg
     start load_flashlight_modules
-    
-on fs
     start prepdecrypt 
         
 on boot
@@ -45,12 +44,6 @@ service prepdecrypt /system/bin/prepdecrypt.sh
     user root
     group root
     seclabel u:r:recovery:s0    
-
-service keystore2 /system/bin/keystore2 /data/misc/keystore
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
 
 service keymint-1-0 /system/bin/hw/android.hardware.security.keymint@1.0-unisoc.service
     user root

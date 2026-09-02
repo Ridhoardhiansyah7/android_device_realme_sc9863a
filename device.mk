@@ -21,11 +21,18 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 # A/B
 TARGET_IS_VAB := true
 ENABLE_VIRTUAL_AB := true
+
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
-    FILESYSTEM_TYPE_system=ext4 \
+    FILESYSTEM_TYPE_system=erofs \
     POSTINSTALL_OPTIONAL_system=true
+
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_vendor=true \
+    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
+    FILESYSTEM_TYPE_vendor=erofs \
+    POSTINSTALL_OPTIONAL_vendor=true
 
 # f2fs utilities
 PRODUCT_PACKAGES += \
@@ -36,12 +43,6 @@ PRODUCT_PACKAGES += \
 # Userdata checkpoint
 PRODUCT_PACKAGES += \
     checkpoint_gc
-
-AB_OTA_POSTINSTALL_CONFIG += \
-    RUN_POSTINSTALL_vendor=true \
-    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
-    FILESYSTEM_TYPE_vendor=erofs \
-    POSTINSTALL_OPTIONAL_vendor=true
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
@@ -100,5 +101,4 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     $(OUT_DIR)/target/product/$(PRODUCT_DEVICE)/obj/SHARED_LIBRARIES/libandroidicu_intermediates/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libandroidicu.so
 
 # Hidl
-#PRODUCT_ENFORCE_VINTF_MANIFEST := false
-
+PRODUCT_ENFORCE_VINTF_MANIFEST := false

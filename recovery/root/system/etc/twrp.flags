@@ -60,7 +60,7 @@
 
 
 # Preload app (Bloatware app)
-/my_preload             ext4     /dev/block/by-name/my_preload           flags=backup=1;display="myPreload";flashimg=1;wipeingui;slotselect
+/my_preload             ext4     /dev/block/by-name/my_preload           flags=backup=1;display="myPreload";flashimg=1;slotselect
 
 
 # Internal, Cache, Metadata
